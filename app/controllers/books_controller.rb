@@ -3,6 +3,7 @@ class BooksController < ApplicationController
     before_action :correct_books,only: [:edit]
   def show
     @book = Book.find(params[:id])
+    @book_comment = BookComment.new
     @new_book = Book.new
     @user = @book.user
   end
