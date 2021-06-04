@@ -9,7 +9,7 @@ Rails.application.routes.draw do
       get :followings, :followers
     end
   end
-
+  get '/search' => 'search#search'
 
 
   resources :books do
