@@ -12,6 +12,8 @@ class BooksController < ApplicationController
     @book = Book.new
     @user = current_user
     @books = Book.all
+    @books = Book.joins(:favorites).group(:book_id).order('count(book_id) desc')
+
   end
 
   def create
