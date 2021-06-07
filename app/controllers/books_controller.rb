@@ -1,11 +1,13 @@
 class BooksController < ApplicationController
     before_action :authenticate_user!
     before_action :correct_books,only: [:edit]
+
   def show
     @book = Book.find(params[:id])
     @book_comment = BookComment.new
     @new_book = Book.new
     @user = @book.user
+    impressionist(@book, nil, unique: [:ip_address])
   end
 
   def index
@@ -14,6 +16,7 @@ class BooksController < ApplicationController
     @book = Book.new
     @user = current_user
     @books = Book.includes(:favorited_users).sort {|a,b| b.favorited_users.includes(:favorites).where(created_at: from...to).size <=> a.favorited_users.includes(:favorites).where(created_at: from...to).size }
+    @books = Book.order(impressions_count: 'DESC')
   end
 
   def create
